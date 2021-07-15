@@ -3,33 +3,29 @@ package model;
 import java.util.Date;
 
 public class Transaccion {
-	
-	private Date FechaTransaccion;
-	
-	private String codigoTransaccion;
+    private Date FechaTransaccion;
 
-	public Transaccion(Date fechaTransaccion, String codigoTransaccion) {
-		super();
-		FechaTransaccion = fechaTransaccion;
-		this.codigoTransaccion = codigoTransaccion;
-	}
+    private String codigoTransaccion;
 
-	public Date getFechaTransaccion() {
-		return FechaTransaccion;
-	}
+    public Transaccion(Date fechaTransaccion, String codigoTransaccion) {
+        super();
+        FechaTransaccion = fechaTransaccion;
+        this.codigoTransaccion = codigoTransaccion;
+    }
 
-	public void setFechaTransaccion(Date fechaTransaccion) {
-		FechaTransaccion = fechaTransaccion;
-	}
+    public Date getFechaTransaccion() {
+        return FechaTransaccion;
+    }
 
-	public String getCodigoTransaccion() {
-		return codigoTransaccion;
-	}
+    public void setFechaTransaccion(Date fechaTransaccion) {
+        FechaTransaccion = fechaTransaccion;
+    }
 
-	public void setCodigoTransaccion(String codigoTransaccion) {
-		this.codigoTransaccion = codigoTransaccion;
-	}
-	
-	
+    public String getCodigoTransaccion() {
+        return codigoTransaccion;
+    }
 
+    public void setCodigoTransaccion(String codigoTransaccion) {
+        this.codigoTransaccion = codigoTransaccion;
+    }
 }
