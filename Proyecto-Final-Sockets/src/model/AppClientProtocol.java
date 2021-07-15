@@ -57,9 +57,8 @@ public class AppClientProtocol {
 
     public static String abrirCuenta() {
         System.out.println("Ingrese su nombre y apellido:\n");
-        String nombre= SCANNER.nextLine();
+        return SCANNER.nextLine();
 
-        return nombre;
 
     }
 }

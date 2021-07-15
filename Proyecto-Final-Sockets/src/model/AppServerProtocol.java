@@ -5,13 +5,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Set;
 
 public class AppServerProtocol {
     private static PrintWriter toNetwork;
     private static BufferedReader fromNetwork;
     private static final String ESPACIO=" ";
     private static int numeroCuenta=0;
-    //private static boolean isLogin=true;
+    private static boolean isLogged=false;
 
     public static void protocol(Socket socket, HashMap<String,CuentaAhorros> cuentas) throws Exception{
         createStreams(socket);
@@ -23,11 +24,18 @@ public class AppServerProtocol {
         switch (opcion) {
             case "ABRIR_CUENTA":
                 String nombre = message.split(ESPACIO)[1]+ESPACIO+message.split(ESPACIO)[2];
-                if(cuentas.containsKey(nombre)) {
+                Set<String> keys=cuentas.keySet();
+                for(String key:keys){
+                    if(cuentas.get(key).getNombreUsuario().equals(nombre)){
+                        isLogged=true;
+                        break;
+                    }
+                }
+                if(isLogged) {
                     toNetwork.println("Error al crear la cuenta, nombre de cuenta repetido");
                 }else {
-                    CuentaAhorros cuenta= new CuentaAhorros(numeroCuenta+"",nombre);
-                    cuentas.put(nombre,cuenta);
+                    CuentaAhorros cuenta= new CuentaAhorros(nombre);
+                    cuentas.put(numeroCuenta+"",cuenta);
                     numeroCuenta++;
                     toNetwork.println("Transaccion exitosa su numero de cuenta es el :"+(numeroCuenta-1)+cuentas.toString());
                 }

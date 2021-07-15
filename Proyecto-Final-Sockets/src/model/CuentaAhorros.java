@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 
 public class CuentaAhorros {
-    private String numCuenta;
 
     private String nombreUsuario;
 
@@ -11,22 +10,13 @@ public class CuentaAhorros {
 
     private static ArrayList<Transaccion> transacciones;
 
-    public CuentaAhorros(String numCuenta, String nombreUsuario) {
+    public CuentaAhorros(String nombreUsuario) {
         super();
-        this.numCuenta = numCuenta;
         this.nombreUsuario = nombreUsuario;
         this.saldoCuenta = 0.0;
         this.transacciones= new ArrayList<>();
     }
 
-
-    public String getNumCuenta() {
-        return numCuenta;
-    }
-
-    public void setNumCuenta(String numCuenta) {
-        this.numCuenta = numCuenta;
-    }
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -48,7 +38,7 @@ public class CuentaAhorros {
 
     @Override
     public String toString() {
-        return "CuentaAhorros [numCuenta=" + numCuenta + ", nombreUsuario=" + nombreUsuario + ", saldoCuenta="
+        return "CuentaAhorros [" + "nombreUsuario=" + nombreUsuario + ", saldoCuenta="
                 + saldoCuenta + ", saldoBolsillo="+"]";
     }
 }
