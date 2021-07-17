@@ -3,11 +3,11 @@ package model;
 public class CuentaBolsillo {
 
     private Boolean isDisponible;
-    private double saldoBolsillo;
+    private Double saldoBolsillo;
     private String nombreCuenta;
 
     public CuentaBolsillo() {
-        this.isDisponible=false;
+        this.isDisponible = false;
     }
 
     public Boolean getDisponible() {

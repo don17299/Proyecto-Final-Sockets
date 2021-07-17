@@ -4,20 +4,21 @@ import java.util.ArrayList;
 
 public class CuentaAhorros {
 
-    private String nombreUsuario;
-
-    private Double saldoCuenta;
-
     private static ArrayList<Transaccion> transacciones;
-
+    private String nombreUsuario;
+    private Double saldoCuenta;
     private CuentaBolsillo cuentaBolsillo;
 
     public CuentaAhorros(String nombreUsuario) {
         super();
         this.nombreUsuario = nombreUsuario;
         this.saldoCuenta = 0.0;
-        this.transacciones= new ArrayList<>();
-        this.cuentaBolsillo=new CuentaBolsillo();
+        this.transacciones = new ArrayList<>();
+        this.cuentaBolsillo = new CuentaBolsillo();
+    }
+
+    public CuentaAhorros() {
+
     }
 
     public CuentaBolsillo getCuentaBolsillo() {
@@ -44,11 +45,12 @@ public class CuentaAhorros {
         this.saldoCuenta = saldoCuenta;
     }
 
-
-
     @Override
     public String toString() {
-        return "CuentaAhorros [" + "nombreUsuario=" + nombreUsuario + ", saldoCuenta="
-                + saldoCuenta + ", saldoBolsillo="+"]";
+        return "CuentaAhorros{" +
+                "nombreUsuario='" + nombreUsuario + '\'' +
+                ", saldoCuenta=" + saldoCuenta +
+                ", cuentaBolsillo=" + cuentaBolsillo.toString() +
+                '}';
     }
 }

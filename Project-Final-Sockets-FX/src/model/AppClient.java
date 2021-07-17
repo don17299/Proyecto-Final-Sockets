@@ -12,16 +12,16 @@ public class AppClient {
         System.out.println("Cliente del Banco en ejecución...");
     }
 
+    public static void main(String args[]) throws Exception {
+        AppClient ec = new AppClient();
+        ec.init();
+    }
+
     public void init() throws Exception {
-        clientSideSocket = new Socket(SERVER,PORT);
+        clientSideSocket = new Socket(SERVER, PORT);
 
         AppClientProtocol.protocol(clientSideSocket);
 
         clientSideSocket.close();
-    }
-
-    public static void main(String args[]) throws Exception {
-        AppClient ec = new AppClient();
-        ec.init();
     }
 }
