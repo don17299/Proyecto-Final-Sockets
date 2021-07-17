@@ -10,13 +10,23 @@ public class CuentaAhorros {
 
     private static ArrayList<Transaccion> transacciones;
 
+    private CuentaBolsillo cuentaBolsillo;
+
     public CuentaAhorros(String nombreUsuario) {
         super();
         this.nombreUsuario = nombreUsuario;
         this.saldoCuenta = 0.0;
         this.transacciones= new ArrayList<>();
+        this.cuentaBolsillo=new CuentaBolsillo();
     }
 
+    public CuentaBolsillo getCuentaBolsillo() {
+        return cuentaBolsillo;
+    }
+
+    public void setCuentaBolsillo(CuentaBolsillo cuentaBolsillo) {
+        this.cuentaBolsillo = cuentaBolsillo;
+    }
 
     public String getNombreUsuario() {
         return nombreUsuario;

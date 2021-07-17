@@ -13,7 +13,6 @@ public class AppServerProtocol {
     private static final String ESPACIO=" ";
     private static int numeroCuenta=0;
     private static boolean isLogged=false;
-
     public static void protocol(Socket socket, HashMap<String,CuentaAhorros> cuentas) throws Exception{
         createStreams(socket);
 
@@ -22,6 +21,7 @@ public class AppServerProtocol {
 
         String opcion = message.split(ESPACIO)[0];
         switch (opcion) {
+
             case "ABRIR_CUENTA":
                 String nombre = message.split(ESPACIO)[1]+ESPACIO+message.split(ESPACIO)[2];
                 Set<String> keys=cuentas.keySet();
@@ -41,17 +41,44 @@ public class AppServerProtocol {
                 }
 
                 break;
+
+            case "ABRIR_BOLSILLO":
+
+                String numeroCuenta = message.split(ESPACIO)[1];
+                System.out.println("El numero de cuenta que llego es de "+numeroCuenta);
+                CuentaAhorros  cuentaUsuario=cuentas.get(numeroCuenta);
+                cuentas.remove(numeroCuenta);
+                CuentaBolsillo micuentaBolsillo=cuentaUsuario.getCuentaBolsillo();
+                micuentaBolsillo.setDisponible(true);
+                micuentaBolsillo.setNombreCuenta(numeroCuenta+"b");
+                micuentaBolsillo.setSaldoBolsillo(1.0);
+                cuentaUsuario.setCuentaBolsillo(micuentaBolsillo);
+                cuentas.put(numeroCuenta,cuentaUsuario);
+                toNetwork.println("Cuenta abierta exitosamente " + cuentas.toString());
+                break;
             case "INFORMEDETALLADO":
                 break;
             case "LOGIN":
 
                 break;
+
+            case "CONSULTAR_NUMERO_CUENTAS":
+
+                toNetwork.println(mostrarNumeroCuentas(cuentas));
+                    break;
             default:toNetwork.println("Ocurrio un error");
 
         }
 
 
 
+    }
+
+
+
+    public static String mostrarNumeroCuentas( HashMap<String,CuentaAhorros> cuentas)
+    {
+         return cuentas.toString();
     }
 
     public static void createStreams(Socket socket) throws Exception{
