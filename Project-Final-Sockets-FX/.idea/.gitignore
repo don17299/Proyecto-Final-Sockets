@@ -1,11 +1,8 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-<<<<<<< HEAD
-=======
 # Datasource local storage ignored files
-/../../../../../../:\Users\carlos\IdeaProjects\Proyecto-Final-Sockets\.idea/dataSources/
+/../../../../../../:\Users\carlos\IdeaProjects\Project-Final-Sockets-FX\.idea/dataSources/
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
->>>>>>> 8b9112d2a236e6e9fe07ced2426a9ed6adfdb2a1
