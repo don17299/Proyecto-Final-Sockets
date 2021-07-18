@@ -100,6 +100,31 @@ public class AppServerProtocol {
                     }
                 }
                 break;
+            case "CANCELAR_CUENTA":
+                String numeroCuenta4 = message.split(ESPACIO)[1];
+                //validaciones
+                if(numeroCuenta4.length()>0 && numeroCuenta4.matches("^[A-Za-z0-9]*$")){
+                    CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta4);
+                    System.out.println(numeroCuenta4);
+                    if(cuentaAhorros != null){
+                        if(!cuentaAhorros.getCuentaBolsillo().getDisponible()){
+                            if(cuentaAhorros.getSaldoCuenta() == 0) {//debe ser igual a cero
+                                cuentas.remove(numeroCuenta4,cuentaAhorros);
+                                mensajeAlServidor = "Proceso exitoso, cuenta: "+ numeroCuenta4+" cancelada";
+                            } else {
+                                mensajeAlServidor = "Saldo existente, no se puede cancelar la cuenta";
+                            }
+                        } else {
+                            mensajeAlServidor = "Bolsillo activo, no se puede cancelar la cuenta";
+                        }
+                    }else{
+                        mensajeAlServidor = "Cuenta inexistente";
+                    }
+                } else {
+                    mensajeAlServidor = "Informacion insuficiente o inconsistente";
+                }
+                break;
+
             case "LOGIN":
 
                 break;

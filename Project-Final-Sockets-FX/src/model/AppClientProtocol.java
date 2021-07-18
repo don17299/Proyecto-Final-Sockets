@@ -25,7 +25,7 @@ public class AppClientProtocol {
                 + "6) Retirar Dinero de una Cuenta de Ahorros\n"
                 + "7) Trasladar Dinero a un Bolsillo\n"
                 + "8) Consultar Saldo\n"
-                + "9) Consultar numeros de cuentas\n "
+                + "9) Consultar numeros de cuentas\n"
                 + "10) Salir\n");
 
         boolean verdad=true;
@@ -51,6 +51,9 @@ public class AppClientProtocol {
                     break;
                 case 3:
                     mensaje = "CANCELAR-BOLSILLO" + ESPACIO + leerCadena("Ingrese el numero de cuenta del bolsillo");
+                    break;
+                case 4:
+                    mensaje = "CANCELAR_CUENTA" +ESPACIO + leerCadena("Ingrese el numero de su cuenta");
                     break;
                 case 9:
                     mensaje = "CONSULTAR_NUMERO_CUENTAS";
