@@ -21,7 +21,6 @@ public class AppClient {
         clientSideSocket = new Socket(SERVER, PORT);
 
         AppClientProtocol.protocol(clientSideSocket);
-
         clientSideSocket.close();
     }
 }
