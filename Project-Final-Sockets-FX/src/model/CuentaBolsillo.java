@@ -8,6 +8,7 @@ public class CuentaBolsillo {
 
     public CuentaBolsillo() {
         this.isDisponible = false;
+        this.saldoBolsillo = 0.0;
     }
 
     public Boolean getDisponible() {
@@ -32,5 +33,14 @@ public class CuentaBolsillo {
 
     public void setNombreCuenta(String nombreCuenta) {
         this.nombreCuenta = nombreCuenta;
+    }
+
+    @Override
+    public String toString() {
+        return "CuentaBolsillo{" +
+                "isDisponible=" + isDisponible +
+                ", saldoBolsillo=" + saldoBolsillo +
+                ", nombreCuenta='" + nombreCuenta + '\'' +
+                '}';
     }
 }

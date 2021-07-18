@@ -28,25 +28,38 @@ public class AppClientProtocol {
                 + "9) Consultar numeros de cuentas\n "
                 + "10) Salir\n");
 
-        int opcion = Integer.parseInt(SCANNER.nextLine());
+        boolean verdad=true;
+        String entrada="";
+        do{
+            entrada= SCANNER.nextLine();
+            if(entrada.length()!=0&&!entrada.matches("^[A-Za-z ]*$")){
+            verdad=false;
+            }else{
+                System.out.println("Error ingrese una opcion valida");
+            }
+        }while (verdad);
 
+            int opcion= Integer.parseInt(entrada);
+            String mensaje = "";
+            switch (opcion) {
 
-        String mensaje = "";
-        switch (opcion) {
+                case 1:
+                    mensaje = "ABRIR_CUENTA" + ESPACIO + leerCadena("Ingrese su nombre y apellido");
+                    break;
+                case 2:
+                    mensaje = "ABRIR_BOLSILLO" + ESPACIO + leerCadena("Ingrese su número de cuenta : ");
+                    break;
+                case 3:
+                    mensaje = "CANCELAR-BOLSILLO" + ESPACIO + leerCadena("Ingrese el numero de cuenta del bolsillo");
+                    break;
+                case 9:
+                    mensaje = "CONSULTAR_NUMERO_CUENTAS";
+                    break;
+                default:
+                    System.out.println("Error");
 
-            case 1:
-                mensaje = "ABRIR_CUENTA" + ESPACIO + leerCadena("Ingrese su nombre y apellido : ");
-                break;
-            case 2:
-                mensaje = "ABRIR_BOLSILLO" + ESPACIO + leerCadena("Ingrese su número de cuenta : ");
-                break;
-            case 9:
-                mensaje = "CONSULTAR_NUMERO_CUENTAS";
-                break;
-            default:
-                System.out.println("Error");
+            }
 
-        }
 
         toNetwork.println(mensaje);
 
@@ -60,8 +73,19 @@ public class AppClientProtocol {
     }
 
     public static String leerCadena(String texto) {
-        System.out.println(texto);
-        return SCANNER.nextLine();
+        String nombre="";
+        boolean verdad=true;
+        do{
+            System.out.println(texto);
+            nombre=SCANNER.nextLine();
+            if(nombre.length()!=0){
+                verdad=false;
+            }else{
+                System.out.println("Error datos vacios");
+            }
+        }while (verdad);
+
+        return nombre;
     }
 
 

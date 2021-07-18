@@ -7,9 +7,9 @@ public class Transaccion {
 
     private String codigoTransaccion;
 
-    public Transaccion(Date fechaTransaccion, String codigoTransaccion) {
+    public Transaccion(String codigoTransaccion) {
         super();
-        FechaTransaccion = fechaTransaccion;
+        FechaTransaccion = new Date();
         this.codigoTransaccion = codigoTransaccion;
     }
 
