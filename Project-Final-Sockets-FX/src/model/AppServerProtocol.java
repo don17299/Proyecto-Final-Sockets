@@ -52,54 +52,50 @@ public class AppServerProtocol {
 
                 String numeroCuenta = message.split(ESPACIO)[1];
 
-                if (!validarNumeroCuenta(numeroCuenta)) {
-                    mensajeAlServidor = "Informacion insuficiente o inconsistente";
-                } else {
-                    if (!validarExistenciaCuenta(numeroCuenta,cuentas)) {
-                        mensajeAlServidor = "La cuenta no existe";
-                    } else {
+                if(validarNumeroCuenta(numeroCuenta)){
+                    if(validarExistenciaCuenta(numeroCuenta,cuentas)){
                         CuentaAhorros cuentaUsuario = cuentas.get(numeroCuenta);
-
-                        if (!cuentaUsuario.getCuentaBolsillo().getDisponible()) {
+                        if(!cuentaUsuario.getCuentaBolsillo().getDisponible()){
                             CuentaBolsillo micuentaBolsillo = cuentaUsuario.getCuentaBolsillo();
                             micuentaBolsillo.setDisponible(true);
                             micuentaBolsillo.setNombreCuenta(numeroCuenta + "b");
                             cuentaUsuario.setCuentaBolsillo(micuentaBolsillo);
                             cuentas.replace(numeroCuenta, cuentaUsuario);
                             mensajeAlServidor = "Bolsillo abierto exitosamente ";
-                        } else if (cuentaUsuario.getCuentaBolsillo().getDisponible()) {
+                        }else{
                             mensajeAlServidor = "Bolsillo ya existente ";
                         }
+                    }else{
+                        mensajeAlServidor = "La cuenta no existe";
                     }
-
-
+                }else{
+                    mensajeAlServidor = "Informacion insuficiente o inconsistente";
                 }
-
                 break;
+
             case "CANCELAR_BOLSILLO":
                 String numeroBolsillo = message.split(ESPACIO)[1];
                 String numCuenta=numeroBolsillo.substring(0, numeroBolsillo.length() - 1);
-                System.out.println(numCuenta+"-");
-                if(!validarNumeroBolsillo(numeroBolsillo, numCuenta)){
-                    mensajeAlServidor = "Informacion insuficiente o inconsistente";
-                } else {
-                    if (!validarExistenciaCuenta(numCuenta, cuentas)) {
-                        mensajeAlServidor = "La cuenta del bolsillo no existe";
-                    } else {
+                if(validarNumeroBolsillo(numeroBolsillo,numCuenta)){
+                    if(validarExistenciaCuenta(numCuenta, cuentas)){
                         CuentaAhorros cuentaUsuario = cuentas.get(numCuenta);
-
                         CuentaBolsillo bolsillo = cuentaUsuario.getCuentaBolsillo();
-                        if (bolsillo.getDisponible()) {
+                        if(bolsillo.getDisponible()){
                             Double saldoB = bolsillo.getSaldoBolsillo();
                             cuentaUsuario.setSaldoCuenta(cuentaUsuario.getSaldoCuenta() + saldoB);
                             bolsillo.setSaldoBolsillo(0.0);
                             bolsillo.setDisponible(false);
                             mensajeAlServidor = "El bolsillo ha sido borrado de la faz de la tierra ";
-                        } else {
+                        }else{
                             mensajeAlServidor = "El bolsillo no ha sido creado ";
                         }
+                    }else {
+                        mensajeAlServidor = "La cuenta del bolsillo no existe";
                     }
+                }else{
+                    mensajeAlServidor = "Informacion insuficiente o inconsistente";
                 }
+
                 break;
             case "CANCELAR_CUENTA":
                 String numeroCuenta4 = message.split(ESPACIO)[1];
@@ -123,58 +119,71 @@ public class AppServerProtocol {
                 } else {
                     mensajeAlServidor = "Informacion insuficiente o inconsistente";
                 }
+
                 break;
 
             case "DEPOSITAR":
-                String numeroCuenta5 = message.split(ESPACIO)[1];
-                if(validarNumeroCuenta(numeroCuenta5)){
-                    if(validarExistenciaCuenta(numeroCuenta5, cuentas)){
-                        String valor = message.split(ESPACIO)[2];
-                        if(isNumber(valor)){
-                            double cantidad = Float.parseFloat(valor);
-                            if(cantidad > 0){
-                                CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta5);
-                                cuentaAhorros.depositar(cantidad);
-                                mensajeAlServidor = "Transaccion realizada exitosamente, saldo actual: "+cuentaAhorros.getSaldoCuenta();
-                            } else {
-                                mensajeAlServidor ="El valor debe ser superior a cero";
-                            }
-                        } else {
-                            mensajeAlServidor ="La cantidad que ingresa no es un numero";
-                        }
-                    }else {
-                        mensajeAlServidor = "Cuenta inexistente";
-                    }
-                } else {
-                    mensajeAlServidor = "Informacion insuficiente o inconsistente";
-                }
-                break;
-            case "RETIRAR":
-                String numeroCuenta6 = message.split(ESPACIO)[1];
-                if(validarNumeroCuenta(numeroCuenta6)){
-                    if(validarExistenciaCuenta(numeroCuenta6, cuentas)){
-                        String valor = message.split(ESPACIO)[2];
-                        if(isNumber(valor)){
-                            double cantidad = Float.parseFloat(valor);
-                            if(cantidad > 0){
-                                CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta6);
-                                if(cuentaAhorros.getSaldoCuenta() >= cantidad){
-                                    cuentaAhorros.retirar(cantidad);
+
+                try {
+                    String numeroCuenta5 = message.split(ESPACIO)[1];
+                    String valor = message.split(ESPACIO)[2];
+                    if(validarNumeroCuenta(numeroCuenta5)){
+                        if(validarExistenciaCuenta(numeroCuenta5, cuentas)){
+                            if(isNumber(valor)){
+                                double cantidad = Float.parseFloat(valor);
+                                if(cantidad > 0){
+                                    CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta5);
+                                    cuentaAhorros.depositar(cantidad);
                                     mensajeAlServidor = "Transaccion realizada exitosamente, saldo actual: "+cuentaAhorros.getSaldoCuenta();
                                 } else {
-                                    mensajeAlServidor = "Fondos insuficientes";
+                                    mensajeAlServidor ="El valor debe ser superior a cero";
                                 }
                             } else {
-                                mensajeAlServidor ="El valor debe ser superior a cero";
+                                mensajeAlServidor ="La cantidad que ingresa no es un numero";
+                            }
+                        }else {
+                            mensajeAlServidor = "Cuenta inexistente";
+                        }
+                    } else {
+                        mensajeAlServidor = "Informacion insuficiente o inconsistente";
+                    }
+                }catch (ArrayIndexOutOfBoundsException e){
+                    mensajeAlServidor="Informaccion ingresada de manera erronea";
+                }
+
+
+                break;
+            case "RETIRAR":
+                try {
+                    String numeroCuenta6 = message.split(ESPACIO)[1];
+                    String valor = message.split(ESPACIO)[2];
+                    if (validarNumeroCuenta(numeroCuenta6)) {
+                        if (validarExistenciaCuenta(numeroCuenta6, cuentas)) {
+
+                            if (isNumber(valor)) {
+                                double cantidad = Float.parseFloat(valor);
+                                if (cantidad > 0) {
+                                    CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta6);
+                                    if (cuentaAhorros.getSaldoCuenta() >= cantidad) {
+                                        cuentaAhorros.retirar(cantidad);
+                                        mensajeAlServidor = "Transaccion realizada exitosamente, saldo actual: " + cuentaAhorros.getSaldoCuenta();
+                                    } else {
+                                        mensajeAlServidor = "Fondos insuficientes";
+                                    }
+                                } else {
+                                    mensajeAlServidor = "El valor debe ser superior a cero";
+                                }
+                            } else {
+                                mensajeAlServidor = "La cantidad que ingresa no es un numero";
                             }
                         } else {
-                            mensajeAlServidor ="La cantidad que ingresa no es un numero";
+                            mensajeAlServidor = "Cuenta inexistente";
                         }
-                    }else {
-                        mensajeAlServidor = "Cuenta inexistente";
+                    } else {
+                        mensajeAlServidor = "Informacion insuficiente o inconsistente";
                     }
-                } else {
-                    mensajeAlServidor = "Informacion insuficiente o inconsistente";
+                }catch (ArrayIndexOutOfBoundsException e){
+                    mensajeAlServidor="Informacion ingresada de manera erronea";
                 }
                 break;
             case "TRASLADAR":
@@ -192,14 +201,18 @@ public class AppServerProtocol {
                 } else {
                     String numCuenta8=numeroCuenta8.substring(0, numeroCuenta8.length() - 1);
                     if(validarNumeroBolsillo(numeroCuenta8, numCuenta8)){
-                        CuentaBolsillo bolsilloConsulta = cuentas.get(numeroCuenta8
-                                .substring(0, numeroCuenta8.length()-2))
-                                .getCuentaBolsillo();
-                        if(bolsilloConsulta != null){
-                            mensajeAlServidor = "Saldo: "+bolsilloConsulta.getSaldoBolsillo()+
-                                    ", bolsillo: "+bolsilloConsulta.getNombreCuenta();
+                        String cuenta=numeroCuenta8.substring(0, numeroCuenta8.length()-1);
+                        if(validarExistenciaCuenta(cuenta,cuentas)){
+                            CuentaAhorros cuentaAhorros= cuentas.get(cuenta);
+                            CuentaBolsillo bolsillo= cuentaAhorros.getCuentaBolsillo();
+                            if(bolsillo.getDisponible()) {
+                                mensajeAlServidor = "Saldo: " + bolsillo.getSaldoBolsillo() +
+                                        ", bolsillo: " + bolsillo.getNombreCuenta();
+                            }else{
+                                mensajeAlServidor="el bolsillo no ha sido creado";
+                            }
                         } else {
-                            mensajeAlServidor = "Cuenta bolsillo inexistente";
+                            mensajeAlServidor = "Cuenta del bolsillo inexistente";
                         }
                     }else{
                         mensajeAlServidor = "Informacion insuficiente o inconsistente";
@@ -226,6 +239,7 @@ public class AppServerProtocol {
     }
 
     private static boolean validarNumeroBolsillo(String numeroBolsillo, String numCuenta) {
+        System.out.println(numeroBolsillo.charAt((numeroBolsillo.length()-1)));
         if(!numCuenta.matches("^\\d*$") || numeroBolsillo.charAt((numeroBolsillo.length()-1))!='b'){
             return false;
         } else {
@@ -233,6 +247,15 @@ public class AppServerProtocol {
         }
     }
 
+    public static boolean validarNumeroCuenta(String numeroCuenta)
+    {
+        if(numeroCuenta.length()>0 && numeroCuenta.matches("^\\d*$"))
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private static boolean validarExistenciaCuenta(String numeroCuenta, HashMap<String, CuentaAhorros> cuentas) {
         CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta);
@@ -250,23 +273,16 @@ public class AppServerProtocol {
         return esNumero;
     }
 
-    public static boolean validarNumeroCuenta(String numeroCuenta)
-    {
-        if(numeroCuenta.length()>0 && numeroCuenta.matches("^\\d*$"))
-        {
-            return true;
-        } else {
-            return false;
-        }
+
+    public static String mostrarNumeroCuentas(HashMap<String, CuentaAhorros> cuentas) {
+        return cuentas.toString();
     }
+
 
     public static void enviarAlServidor(String texto) {
         toNetwork.println(texto);
     }
 
-    public static String mostrarNumeroCuentas(HashMap<String, CuentaAhorros> cuentas) {
-        return cuentas.toString();
-    }
 
     public static void createStreams(Socket socket) throws Exception {
         toNetwork = new PrintWriter(socket.getOutputStream(), true);
