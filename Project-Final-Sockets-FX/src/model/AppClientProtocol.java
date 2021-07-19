@@ -64,7 +64,7 @@ public class AppClientProtocol {
                 case 7:
 
                     mensaje= "TRASLADAR"+ESPACIO+leerCadena("Ingrese el numero de su cuenta y el saldo a trasladar");
-
+                    break;
                 case 9:
                     mensaje = "CONSULTAR_NUMERO_CUENTAS";
                     break;

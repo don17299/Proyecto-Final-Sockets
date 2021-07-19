@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.StandardSocketOptions;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -187,8 +188,42 @@ public class AppServerProtocol {
                 }
                 break;
             case "TRASLADAR":
+                String numeroCuenta7 = message.split(ESPACIO)[1];
+                String valor = message.split(ESPACIO)[2];
+                System.out.println("entro");
+                Double saldoAMover=0.0;
+                Double saldoBolsillo=0.0;
+                if (validarNumeroCuenta(numeroCuenta7)) {
+                    if (validarExistenciaCuenta(numeroCuenta7, cuentas)) {
+                        if (isNumber(valor)) {
+                            double cantidad = Float.parseFloat(valor);
+                            if (cantidad > 0) {
+                                CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta7);
+                                if (cuentaAhorros.getSaldoCuenta() >= cantidad) {
+                                    if(cuentaAhorros.getCuentaBolsillo().getDisponible()) {
+                                        saldoAMover = cuentaAhorros.getSaldoCuenta() - cantidad;
+                                        cuentaAhorros.setSaldoCuenta(saldoAMover);
+                                        saldoBolsillo = cuentaAhorros.getCuentaBolsillo().getSaldoBolsillo();
+                                        cuentaAhorros.getCuentaBolsillo().setSaldoBolsillo(saldoBolsillo + cantidad);
 
-
+                                    }else{
+                                             mensajeAlServidor="El bolsillo no existe";
+                                    }
+                                } else {
+                                    mensajeAlServidor = "Fondos insuficientes";
+                                }
+                            } else {
+                                mensajeAlServidor = "El valor debe ser superior a cero";
+                            }
+                        } else {
+                            mensajeAlServidor = "La cantidad que ingresa no es un numero";
+                        }
+                    } else {
+                        mensajeAlServidor = "Cuenta inexistente";
+                    }
+                } else {
+                    mensajeAlServidor = "Informacion insuficiente o inconsistente";
+                }
 
 
                 break;
