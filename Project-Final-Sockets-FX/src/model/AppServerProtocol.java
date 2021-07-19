@@ -125,8 +125,29 @@ public class AppServerProtocol {
                 }
                 break;
 
-            case "LOGIN":
-
+            case "DEPOSITAR":
+                String numeroCuenta5 = message.split(ESPACIO)[1];
+                if(validarNumeroCuenta(numeroCuenta5)){
+                    if(validarExistenciaCuenta(numeroCuenta5, cuentas)){
+                        String valor = message.split(ESPACIO)[2];
+                        if(isNumber(valor)){
+                            float cantidad = Float.parseFloat(valor);
+                            if(cantidad > 0){
+                                CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta5);
+                                cuentaAhorros.depositar(cantidad);
+                                mensajeAlServidor = "Transaccion realizada exitosamente, saldo actual: "+cuentaAhorros.getSaldoCuenta();
+                            } else {
+                                mensajeAlServidor ="El valor debe ser superior a cero";
+                            }
+                        } else {
+                            mensajeAlServidor ="La cantidad que ingresa no es un numero";
+                        }
+                    }else {
+                        mensajeAlServidor = "Cuenta inexistente";
+                    }
+                } else {
+                    mensajeAlServidor = "Informacion insuficiente o inconsistente";
+                }
                 break;
 
             case "CONSULTAR_NUMERO_CUENTAS":
@@ -144,6 +165,32 @@ public class AppServerProtocol {
         enviarAlServidor(mensajeAlServidor);
 
 
+    }
+
+    private static boolean validarExistenciaCuenta(String numeroCuenta, HashMap<String, CuentaAhorros> cuentas) {
+        CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta);
+        return (cuentaAhorros != null)? true:false;
+    }
+
+    private static boolean isNumber(String valor) {
+        float cantidad;
+        boolean esNumero =true;
+        try {
+            cantidad = Float.parseFloat(valor);
+        } catch (NumberFormatException e){
+            esNumero = false;
+        }
+        return esNumero;
+    }
+
+    public static boolean validarNumeroCuenta(String numeroCuenta)
+    {
+        if(numeroCuenta.length()>0 && numeroCuenta.matches("^[A-Za-z0-9]*$"))
+        {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static void enviarAlServidor(String texto) {

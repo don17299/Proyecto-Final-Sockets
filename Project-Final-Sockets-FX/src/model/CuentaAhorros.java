@@ -45,6 +45,10 @@ public class CuentaAhorros {
         this.saldoCuenta = saldoCuenta;
     }
 
+    public void depositar(double cantidad) {
+        this.saldoCuenta += cantidad;
+    }
+
     @Override
     public String toString() {
         return "CuentaAhorros{" +

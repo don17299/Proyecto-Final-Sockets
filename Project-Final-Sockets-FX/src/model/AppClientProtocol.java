@@ -55,6 +55,11 @@ public class AppClientProtocol {
                 case 4:
                     mensaje = "CANCELAR_CUENTA" +ESPACIO + leerCadena("Ingrese el numero de su cuenta");
                     break;
+                case 5:
+                    mensaje = "DEPOSITAR" +ESPACIO + leerCadena("Ingrese el numero de su cuenta");
+                    mensaje += ESPACIO + leerCadena("Ingrese la cantidad a depositar");
+                    break;
+
                 case 9:
                     mensaje = "CONSULTAR_NUMERO_CUENTAS";
                     break;
