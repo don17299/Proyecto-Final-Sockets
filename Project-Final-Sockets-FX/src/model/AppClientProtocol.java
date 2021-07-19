@@ -50,15 +50,24 @@ public class AppClientProtocol {
                     mensaje = "ABRIR_BOLSILLO" + ESPACIO + leerCadena("Ingrese su número de cuenta : ");
                     break;
                 case 3:
-                    mensaje = "CANCELAR-BOLSILLO" + ESPACIO + leerCadena("Ingrese el numero de cuenta del bolsillo");
+                    mensaje = "CANCELAR_BOLSILLO" + ESPACIO + leerCadena("Ingrese el numero de cuenta del bolsillo");
                     break;
                 case 4:
                     mensaje = "CANCELAR_CUENTA" +ESPACIO + leerCadena("Ingrese el numero de su cuenta");
                     break;
                 case 5:
-                    mensaje = "DEPOSITAR" +ESPACIO + leerCadena("Ingrese el numero de su cuenta");
-                    mensaje += ESPACIO + leerCadena("Ingrese la cantidad a depositar");
+                    mensaje = "DEPOSITAR" +ESPACIO + leerCadena("Ingrese el numero de su cuenta y la cantidad a depositar separados por espacio");
                     break;
+                case 6:
+                    mensaje = "RETIRAR" +ESPACIO +leerCadena("Ingrese el numero de su cuenta y la cantidad a retirar separados por espacio");
+                    break;
+                case 7:
+                    break;
+
+                case 8:
+                    mensaje = "CONSULTAR"+ESPACIO+leerCadena("Ingrese el numero de la cuenta o bolsillo");
+                    break;
+
 
                 case 9:
                     mensaje = "CONSULTAR_NUMERO_CUENTAS";

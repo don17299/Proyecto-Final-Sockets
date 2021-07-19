@@ -75,7 +75,7 @@ public class AppServerProtocol {
                 }
 
                 break;
-            case "CANCELAR-BOLSILLO":
+            case "CANCELAR_BOLSILLO":
                 String numeroBolsillo = message.split(ESPACIO)[1];
                 String numCuenta=numeroBolsillo.substring(0, numeroBolsillo.length() - 1);
                 if(numCuenta.matches("^[A-Za-z ]*$") || numeroBolsillo.charAt((numeroBolsillo.length()-1))!='b'){
@@ -103,10 +103,9 @@ public class AppServerProtocol {
             case "CANCELAR_CUENTA":
                 String numeroCuenta4 = message.split(ESPACIO)[1];
                 //validaciones
-                if(numeroCuenta4.length()>0 && numeroCuenta4.matches("^[A-Za-z0-9]*$")){
-                    CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta4);
-                    System.out.println(numeroCuenta4);
-                    if(cuentaAhorros != null){
+                if(validarNumeroCuenta(numeroCuenta4)){
+                    if(validarExistenciaCuenta(numeroCuenta4,cuentas)){
+                        CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta4);
                         if(!cuentaAhorros.getCuentaBolsillo().getDisponible()){
                             if(cuentaAhorros.getSaldoCuenta() == 0) {//debe ser igual a cero
                                 cuentas.remove(numeroCuenta4,cuentaAhorros);
@@ -131,7 +130,7 @@ public class AppServerProtocol {
                     if(validarExistenciaCuenta(numeroCuenta5, cuentas)){
                         String valor = message.split(ESPACIO)[2];
                         if(isNumber(valor)){
-                            float cantidad = Float.parseFloat(valor);
+                            double cantidad = Float.parseFloat(valor);
                             if(cantidad > 0){
                                 CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta5);
                                 cuentaAhorros.depositar(cantidad);
@@ -148,6 +147,63 @@ public class AppServerProtocol {
                 } else {
                     mensajeAlServidor = "Informacion insuficiente o inconsistente";
                 }
+                break;
+            case "RETIRAR":
+                String numeroCuenta6 = message.split(ESPACIO)[1];
+                if(validarNumeroCuenta(numeroCuenta6)){
+                    if(validarExistenciaCuenta(numeroCuenta6, cuentas)){
+                        String valor = message.split(ESPACIO)[2];
+                        if(isNumber(valor)){
+                            double cantidad = Float.parseFloat(valor);
+                            if(cantidad > 0){
+                                CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta6);
+                                if(cuentaAhorros.getSaldoCuenta() >= cantidad){
+                                    cuentaAhorros.retirar(cantidad);
+                                    mensajeAlServidor = "Transaccion realizada exitosamente, saldo actual: "+cuentaAhorros.getSaldoCuenta();
+                                } else {
+                                    mensajeAlServidor = "Fondos insuficientes";
+                                }
+                            } else {
+                                mensajeAlServidor ="El valor debe ser superior a cero";
+                            }
+                        } else {
+                            mensajeAlServidor ="La cantidad que ingresa no es un numero";
+                        }
+                    }else {
+                        mensajeAlServidor = "Cuenta inexistente";
+                    }
+                } else {
+                    mensajeAlServidor = "Informacion insuficiente o inconsistente";
+                }
+                break;
+            case "TRASLADAR":
+                break;
+
+            case "CONSULTAR":
+                String numeroCuenta8 = message.split(ESPACIO)[1];
+                if(validarNumeroCuenta(numeroCuenta8)){
+                    if(validarExistenciaCuenta(numeroCuenta8, cuentas)){
+                        CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta8);
+                        mensajeAlServidor = "Saldo: "+ cuentaAhorros.getSaldoCuenta();
+                    }else {
+                        mensajeAlServidor = "Cuenta inexistente";
+                    }
+                } else {
+                    if(validarNumeroBolsillo(numeroCuenta8)){
+                        CuentaBolsillo bolsilloConsulta = cuentas.get(numeroCuenta8
+                                .substring(0, numeroCuenta8.length()-2))
+                                .getCuentaBolsillo();
+                        if(bolsilloConsulta != null){
+                            mensajeAlServidor = "Saldo: "+bolsilloConsulta.getSaldoBolsillo()+
+                                    ", bolsillo: "+bolsilloConsulta.getNombreCuenta();
+                        } else {
+                            mensajeAlServidor = "Cuenta bolsillo inexistente";
+                        }
+                    }else{
+                        mensajeAlServidor = "Informacion insuficiente o inconsistente";
+                    }
+                }
+
                 break;
 
             case "CONSULTAR_NUMERO_CUENTAS":
@@ -167,6 +223,16 @@ public class AppServerProtocol {
 
     }
 
+    private static boolean validarNumeroBolsillo(String numeroBolsillo) {
+        String numCuenta=numeroBolsillo.substring(0, numeroBolsillo.length() - 1);
+        if(numCuenta.matches(".*[A-Za-z ].*") || numeroBolsillo.charAt((numeroBolsillo.length()-1))!='b'){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     private static boolean validarExistenciaCuenta(String numeroCuenta, HashMap<String, CuentaAhorros> cuentas) {
         CuentaAhorros cuentaAhorros = cuentas.get(numeroCuenta);
         return (cuentaAhorros != null)? true:false;
@@ -185,7 +251,7 @@ public class AppServerProtocol {
 
     public static boolean validarNumeroCuenta(String numeroCuenta)
     {
-        if(numeroCuenta.length()>0 && numeroCuenta.matches("^[A-Za-z0-9]*$"))
+        if(numeroCuenta.length()>0 && !numeroCuenta.matches("^[A-Za-z ]*$"))
         {
             return true;
         } else {

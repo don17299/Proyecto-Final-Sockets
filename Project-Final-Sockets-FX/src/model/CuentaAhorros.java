@@ -57,4 +57,8 @@ public class CuentaAhorros {
                 ", cuentaBolsillo=" + cuentaBolsillo.toString() +
                 '}';
     }
+
+    public void retirar(double cantidad) {
+        this.saldoCuenta -= cantidad;
+    }
 }
