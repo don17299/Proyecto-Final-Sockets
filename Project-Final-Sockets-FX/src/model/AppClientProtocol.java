@@ -62,6 +62,7 @@ public class AppClientProtocol {
                     mensaje = "RETIRAR" +ESPACIO +leerCadena("Ingrese el numero de su cuenta y la cantidad a retirar separados por espacio");
                     break;
                 case 7:
+                    mensaje= "TRASLADAR"+ESPACIO+leerCadena("Ingrese el numero de su cuenta y el saldo a trasladar");
                     break;
 
                 case 8:

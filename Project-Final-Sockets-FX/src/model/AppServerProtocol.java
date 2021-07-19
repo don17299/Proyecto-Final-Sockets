@@ -177,9 +177,14 @@ public class AppServerProtocol {
                 }
                 break;
             case "TRASLADAR":
+
+
+
+
                 break;
 
             case "CONSULTAR":
+                //NO FUNCIONA
                 String numeroCuenta8 = message.split(ESPACIO)[1];
                 if(validarNumeroCuenta(numeroCuenta8)){
                     if(validarExistenciaCuenta(numeroCuenta8, cuentas)){
