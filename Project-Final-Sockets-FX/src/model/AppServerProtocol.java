@@ -225,7 +225,7 @@ public class AppServerProtocol {
 
     private static boolean validarNumeroBolsillo(String numeroBolsillo) {
         String numCuenta=numeroBolsillo.substring(0, numeroBolsillo.length() - 1);
-        if(numCuenta.matches(".*[A-Za-z ].*") || numeroBolsillo.charAt((numeroBolsillo.length()-1))!='b'){
+        if(numCuenta.matches("^[A-Za-z ]*$") || numeroBolsillo.charAt((numeroBolsillo.length()-1))!='b'){
             return false;
         } else {
             return true;
@@ -251,8 +251,7 @@ public class AppServerProtocol {
 
     public static boolean validarNumeroCuenta(String numeroCuenta)
     {
-        if(numeroCuenta.length()>0 && !numeroCuenta.matches("^[A-Za-z ]*$"))
-        {
+        if(numeroCuenta.length() > 0 && !numeroCuenta.matches("[b]+")) {
             return true;
         } else {
             return false;
