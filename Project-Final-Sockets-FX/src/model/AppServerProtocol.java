@@ -1,6 +1,8 @@
 package model;
 
+
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -19,15 +21,24 @@ public class AppServerProtocol {
 
         String message = fromNetwork.readLine();
         System.out.println("[Server] from Client: " + message);
-        String mensajeAlCliente = "";
+
+        enviarAlServidor(switchServer(message,cuentas));
+
+
+    }
+
+    private static String switchServer(String message,HashMap<String,CuentaAhorros> cuentas){
+
         String opcion = message.split(ESPACIO)[0];
+
+        String mensajeAlCliente = "";
         switch (opcion) {
 
             case "ABRIR_CUENTA":
                 String nombre="";
                 String[] entrada=message.split(ESPACIO);
                 for(int i=1;i<entrada.length;i++){
-                            nombre+=message.split(ESPACIO)[i] + ESPACIO;
+                    nombre+=message.split(ESPACIO)[i] + ESPACIO;
                 }
                 nombre = nombre.trim();
                 Set<String> keys = cuentas.keySet();
@@ -212,7 +223,7 @@ public class AppServerProtocol {
                                         mensajeAlCliente="Transaccion exitosa, el saldo actual de su cuenta es: "+cuentaAhorros.getSaldoCuenta()+"y el saldo de su bolsillo es: "+cuentaAhorros.getCuentaBolsillo().getSaldoBolsillo();
 
                                     }else{
-                                             mensajeAlCliente="ERR:El bolsillo no existe";
+                                        mensajeAlCliente="ERR:El bolsillo no existe";
                                     }
                                 } else {
                                     mensajeAlCliente = "ERR:Fondos insuficientes";
@@ -271,18 +282,32 @@ public class AppServerProtocol {
                 mensajeAlCliente = mostrarNumeroCuentas(cuentas);
                 break;
 
+            case "CARGA":
+                leerTxt(message.split(ESPACIO)[1],cuentas);
+                break;
             default:
                 mensajeAlCliente = "ERR:Ocurrio un error";
 
                 break;
 
-
         }
-        enviarAlServidor(mensajeAlCliente);
-
-
+        return mensajeAlCliente;
     }
 
+    public static void leerTxt(String direccion,HashMap<String,CuentaAhorros> cuentas){
+        try{
+            BufferedReader bf= new BufferedReader(new FileReader(direccion));
+            String temp="";
+            String bfRead;
+            while ((bfRead=bf.readLine())!=null){
+                System.out.println("[Server] from Client: " + bfRead.split(ESPACIO)[0] +" with this information: "+((bfRead.split(ESPACIO)[1]!=null)?bfRead.split(ESPACIO)[1]:""));
+                enviarAlServidor(switchServer(bfRead,cuentas));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     private static boolean validarNumeroBolsillo(String numeroBolsillo, String numCuenta) {
         System.out.println(numeroBolsillo.charAt((numeroBolsillo.length()-1)));

@@ -44,7 +44,8 @@ public class ControladorPrincipal implements Initializable {
             "Retirar",
             "Trasladar",
             "Consultar Saldo de Cuenta",
-            "Consultar Numero de Cuentas");
+            "Consultar Numero de Cuentas",
+            "Cargar Archivo");
 
 
     @Override
@@ -55,6 +56,7 @@ public class ControladorPrincipal implements Initializable {
 
         reconocerTexto();
         reconocerCombo();
+        informacion.setWrapText(true);
 
     }
 
@@ -111,6 +113,10 @@ public class ControladorPrincipal implements Initializable {
                     primerDato.setDisable(true);
                     realizar.setDisable(false);
                     break;
+                case "Cargar Archivo":
+                    opcion=10;
+                    labelMC.setText("Ingrese la ruta del archivo");
+                    break;
                 default:
                     System.out.println("error");
             }
@@ -134,11 +140,11 @@ public class ControladorPrincipal implements Initializable {
     public void mostrarMensajeServidor(String message){
         String[] mensaje= message.split(":");
         if(mensaje[0].equals("ERR")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error del Banco");
-            alert.setHeaderText("Error de Transacción");
-            alert.setContentText(mensaje[1]);
-            alert.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error del Banco");
+                alert.setHeaderText("Error de Transacción");
+                alert.setContentText(mensaje[1]);
+                alert.showAndWait();
 
         }else {
             informacion.setText(message);

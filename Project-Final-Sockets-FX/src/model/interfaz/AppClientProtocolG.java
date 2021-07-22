@@ -46,6 +46,8 @@ public class AppClientProtocolG {
             case 9:
                 mensaje = "CONSULTAR_NUMERO_CUENTAS";
                 break;
+            case 10:
+                mensaje="CARGA"+ESPACIO+mensaje;
             default:
         }
 

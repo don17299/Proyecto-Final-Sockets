@@ -26,7 +26,7 @@ public class AppClientProtocol {
                 + "7) Trasladar Dinero a un Bolsillo\n"
                 + "8) Consultar Saldo\n"
                 + "9) Consultar numeros de cuentas\n"
-                + "10) Salir\n");
+                + "10)Cargar archivo con transacciones\n");
 
         boolean verdad=true;
         String entrada="";
@@ -69,6 +69,9 @@ public class AppClientProtocol {
                     break;
                 case 9:
                     mensaje = "CONSULTAR_NUMERO_CUENTAS";
+                    break;
+                case 10:
+                    mensaje="CARGA"+ESPACIO+leerCadena("Ingrese la ruta del archivo");
                     break;
                 default:
                     System.out.println("Error");
