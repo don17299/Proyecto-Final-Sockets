@@ -8,6 +8,8 @@ import java.net.StandardSocketOptions;
 import java.util.HashMap;
 import java.util.Set;
 
+import static model.AppClientProtocol.createStreams;
+
 public class AppServerProtocol {
     private static final String ESPACIO = " ";
     private static PrintWriter toNetwork;
@@ -278,15 +280,10 @@ public class AppServerProtocol {
 
     }
 
-<<<<<<< HEAD
-    private static boolean validarNumeroBolsillo(String numeroBolsillo) {
-        String numCuenta=numeroBolsillo.substring(0, numeroBolsillo.length() - 1);
-        if(numCuenta.matches("^[A-Za-z ]*$") || numeroBolsillo.charAt((numeroBolsillo.length()-1))!='b'){
-=======
+
     private static boolean validarNumeroBolsillo(String numeroBolsillo, String numCuenta) {
         System.out.println(numeroBolsillo.charAt((numeroBolsillo.length()-1)));
         if(!numCuenta.matches("^\\d*$") || numeroBolsillo.charAt((numeroBolsillo.length()-1))!='b'){
->>>>>>> 0c4e9969c720b4086fdb743b633a535ea6ccf077
             return false;
         } else {
             return true;
@@ -319,19 +316,10 @@ public class AppServerProtocol {
         return esNumero;
     }
 
-<<<<<<< HEAD
-    public static boolean validarNumeroCuenta(String numeroCuenta)
-    {
-        if(numeroCuenta.length() > 0 && !numeroCuenta.matches("[b]+")) {
-            return true;
-        } else {
-            return false;
-        }
-=======
+
 
     public static String mostrarNumeroCuentas(HashMap<String, CuentaAhorros> cuentas) {
         return cuentas.toString();
->>>>>>> 0c4e9969c720b4086fdb743b633a535ea6ccf077
     }
 
 
