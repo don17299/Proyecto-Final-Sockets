@@ -135,6 +135,7 @@ public class ControladorPrincipal implements Initializable {
                     break;
                 case "Consultar Numero de Cuentas":
                     opcion = 9;
+                    labelMC.setText("");
                     primerDato.setDisable(true);
                     realizar.setDisable(false);
                     break;
