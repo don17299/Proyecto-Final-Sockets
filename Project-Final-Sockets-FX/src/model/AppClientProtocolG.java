@@ -15,7 +15,6 @@ public class AppClientProtocolG {
     public static void protocol(Socket socket, int opcion, String mensaje) throws Exception {
         createStreams(socket);
 
-        String mensaje = "";
         switch (opcion) {
 
             case 1:
