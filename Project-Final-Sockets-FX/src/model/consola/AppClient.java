@@ -1,4 +1,4 @@
-package model;
+package model.consola;
 
 import java.net.Socket;
 

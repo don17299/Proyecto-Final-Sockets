@@ -1,4 +1,4 @@
-package model;
+package model.consola;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -62,8 +62,10 @@ public class AppClientProtocol {
                     mensaje = "RETIRAR" +ESPACIO +leerCadena("Ingrese el numero de su cuenta y la cantidad a retirar separados por espacio");
                     break;
                 case 7:
-
-                    mensaje= "TRASLADAR"+ESPACIO+leerCadena("Ingrese el numero de su cuenta y el saldo a trasladar");
+                    mensaje= "TRASLADAR"+ESPACIO+leerCadena("Ingrese el numero de su cuenta y el saldo a trasladar al bolsillo separados por un espacio");
+                    break;
+                case 8:
+                    mensaje="CONSULTAR"+ESPACIO+leerCadena("Ingrese su numero de cuenta de ahorros o un bolsillo");
                     break;
                 case 9:
                     mensaje = "CONSULTAR_NUMERO_CUENTAS";

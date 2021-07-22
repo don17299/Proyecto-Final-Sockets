@@ -8,22 +8,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import sample.Main;
+import model.interfaz.AppClientG;
+import model.interfaz.Main;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ControladorPrincipal implements Initializable {
     //labeles
     @FXML
-    Label labelM1;
+    Label labelMC;
     @FXML
-    Label labelM2;
-    @FXML
-    Label lMConfirmacion;
+    Label labelMS;
+
     //labeles del gridpane
     @FXML
     Label label00;
@@ -57,30 +55,24 @@ public class ControladorPrincipal implements Initializable {
     //campos de texto
     @FXML
     TextField primerDato;
-    @FXML
-    TextField segundoDato;
 
     @FXML
     private ComboBox<String> comboOpciones;
 
-
-    @FXML
-    private TextField datos;
-
-    @FXML
-    private Label labelkk=new Label();
-
     @FXML
     ImageView imagen;
 
+    private int opcion;
+
     Main controladorEnlace;
-    ObservableList<String> list = FXCollections.observableArrayList("Crear cuenta","Crear bolsillo",
-            "Cancelar bolsillo",
-            "Cancelar cuenta",
+    ObservableList<String> list = FXCollections.observableArrayList("Crear Cuenta","Crear Bolsillo",
+            "Cancelar Bolsillo",
+            "Cancelar Cuenta",
             "Depositar",
             "Retirar",
             "Trasladar",
-            "Consultar numero de cuentas");
+            "Consultar Saldo de Cuenta",
+            "Consultar Numero de Cuentas");
 
 
     @Override
@@ -88,15 +80,10 @@ public class ControladorPrincipal implements Initializable {
 
 
         comboOpciones.setItems(list);
-        labelkk.setText("NOOOOOOOO");
-
-        segundoDato.setVisible(false);
-<<<<<<< HEAD
-=======
-
->>>>>>> a89a6d8c6e9422bea8a75dd548a3a7b1770b4a7c
 
         reconocerTexto();
+        reconocerCombo();
+
     }
 
     public void reconocerTexto() {
@@ -106,13 +93,76 @@ public class ControladorPrincipal implements Initializable {
             } else {
                 realizar.setDisable(true);
             }
+
         });
     }
 
+    public void reconocerCombo(){
+        comboOpciones.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            //System.out.println(newValue);
+            switch (newValue) {
+                case "Crear Cuenta":
+                    opcion = 1;
+                    labelMC.setText("Ingrese su nombre y apellido");
+                    break;
+                case "Crear Bolsillo":
+                    opcion = 2;
+                    labelMC.setText("Ingrese su número de cuenta : ");
+                    break;
+                case "Cancelar Bolsillo":
+                    opcion = 3;
+                    labelMC.setText("Ingrese el numero de cuenta del bolsillo");
+                    break;
+                case "Cancelar Cuenta":
+                    opcion = 4;
+                    labelMC.setText("Ingrese su número de cuenta : ");
+                    break;
+                case "Depositar":
+                    opcion = 5;
+                    labelMC.setText("Ingrese el numero de su cuenta y la cantidad a depositar separados por espacio");
+                    break;
+                case "Retirar":
+                    opcion = 6;
+                    labelMC.setText("Ingrese el numero de su cuenta y la cantidad a retirar separados por espacio");
+                    break;
+                case "Trasladar":
+                    opcion = 7;
+                    labelMC.setText("Ingrese el numero de su cuenta y el saldo a trasladar al bolsillo separados por un espacio");
+                    break;
+                case "Consultar Saldo de Cuenta":
+                    opcion = 8;
+                    labelMC.setText("Ingrese su numero de cuenta de ahorros o un bolsillo");
+                    break;
+                case "Consultar Numero de Cuentas":
+                    opcion = 9;
+                    primerDato.setDisable(true);
+                    realizar.setDisable(false);
+                    break;
+                default:
+                    System.out.println("error");
+            }
+        });
+    }
 
+    @FXML
+    public void realizarButton(){
+        primerDato.setDisable(false);
+        controladorEnlace.setCliente(new AppClientG());
+        String numCuenta=numCuenta =primerDato.getText();
+        try {
+            controladorEnlace.getCliente().init(opcion,numCuenta,this);
+            primerDato.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
 
-    public void enlazarVentaYControlador(Main principal)
+    public void mostrarMensajeServidor(String message){
+        labelMS.setText(message);
+    }
+
+    public void enlazarVentanaYControlador(Main principal)
     {
         controladorEnlace=principal;
     }

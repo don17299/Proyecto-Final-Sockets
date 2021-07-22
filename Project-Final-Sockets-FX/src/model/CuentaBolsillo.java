@@ -2,21 +2,11 @@ package model;
 
 public class CuentaBolsillo {
 
-    private Boolean isDisponible;
     private Double saldoBolsillo;
     private String nombreCuenta;
 
     public CuentaBolsillo() {
-        this.isDisponible = false;
         this.saldoBolsillo = 0.0;
-    }
-
-    public Boolean getDisponible() {
-        return isDisponible;
-    }
-
-    public void setDisponible(Boolean disponible) {
-        isDisponible = disponible;
     }
 
     public double getSaldoBolsillo() {
@@ -38,7 +28,6 @@ public class CuentaBolsillo {
     @Override
     public String toString() {
         return "CuentaBolsillo{" +
-                "isDisponible=" + isDisponible +
                 ", saldoBolsillo=" + saldoBolsillo +
                 ", nombreCuenta='" + nombreCuenta + '\'' +
                 '}';

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class CuentaAhorros {
 
-    private static ArrayList<Transaccion> transacciones;
+    private ArrayList<Transaccion> transacciones;
     private String nombreUsuario;
     private Double saldoCuenta;
     private CuentaBolsillo cuentaBolsillo;
@@ -14,11 +14,13 @@ public class CuentaAhorros {
         this.nombreUsuario = nombreUsuario;
         this.saldoCuenta = 0.0;
         this.transacciones = new ArrayList<>();
-        this.cuentaBolsillo = new CuentaBolsillo();
     }
 
     public CuentaAhorros() {
+    }
 
+    public Boolean isDisponible(){
+        return cuentaBolsillo!=null;
     }
 
     public CuentaBolsillo getCuentaBolsillo() {
@@ -49,18 +51,28 @@ public class CuentaAhorros {
         this.saldoCuenta += cantidad;
     }
 
+    public ArrayList<Transaccion> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(ArrayList<Transaccion> transacciones) {
+        this.transacciones = transacciones;
+    }
+
     @Override
     public String toString() {
         return "CuentaAhorros{" +
                 "nombreUsuario='" + nombreUsuario + '\'' +
                 ", saldoCuenta=" + saldoCuenta +
-                ", cuentaBolsillo=" + cuentaBolsillo.toString() +
+                ", cuentaBolsillo=" + ((cuentaBolsillo!=null)?cuentaBolsillo.toString():"no existe") +
                 '}';
     }
 
     public void retirar(double cantidad) {
         this.saldoCuenta -= cantidad;
     }
+
+
 
 
 }

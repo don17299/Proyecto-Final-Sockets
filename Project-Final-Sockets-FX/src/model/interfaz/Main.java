@@ -1,14 +1,14 @@
-package sample;
+package model.interfaz;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.VBox;
+import model.interfaz.AppClientG;
 import view.ControladorPrincipal;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -16,17 +16,19 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+    private AppClientG cliente;
+
     public static void main(String[] args) throws Exception {
 
         launch(args);
-
 
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        //cliente = new AppClientG();
         lanzarVentanaInicial();
+
     }
 
 
@@ -54,13 +56,15 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setTitle("Menu");
            ControladorPrincipal controlador = cargador.getController();
-           controlador.enlazarVentaYControlador(this);
+           controlador.enlazarVentanaYControlador(this);
            stage.showAndWait();
     }
 
+    public AppClientG getCliente() {
+        return cliente;
+    }
 
-
-
-
-
+    public void setCliente(AppClientG cliente) {
+        this.cliente = cliente;
+    }
 }
