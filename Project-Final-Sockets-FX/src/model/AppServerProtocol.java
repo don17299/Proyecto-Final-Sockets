@@ -8,6 +8,8 @@ import java.net.StandardSocketOptions;
 import java.util.HashMap;
 import java.util.Set;
 
+import static model.AppClientProtocol.createStreams;
+
 public class AppServerProtocol {
     private static final String ESPACIO = " ";
     private static PrintWriter toNetwork;
@@ -278,6 +280,7 @@ public class AppServerProtocol {
 
     }
 
+
     private static boolean validarNumeroBolsillo(String numeroBolsillo, String numCuenta) {
         System.out.println(numeroBolsillo.charAt((numeroBolsillo.length()-1)));
         if(!numCuenta.matches("^\\d*$") || numeroBolsillo.charAt((numeroBolsillo.length()-1))!='b'){
@@ -312,6 +315,7 @@ public class AppServerProtocol {
         }
         return esNumero;
     }
+
 
 
     public static String mostrarNumeroCuentas(HashMap<String, CuentaAhorros> cuentas) {

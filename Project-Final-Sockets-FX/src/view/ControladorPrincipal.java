@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,6 +17,48 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ControladorPrincipal implements Initializable {
+    //labeles
+    @FXML
+    Label labelM1;
+    @FXML
+    Label labelM2;
+    @FXML
+    Label lMConfirmacion;
+    //labeles del gridpane
+    @FXML
+    Label label00;
+    @FXML
+    Label label01;
+    @FXML
+    Label label10;
+    @FXML
+    Label label11;
+    @FXML
+    Label label20;
+    @FXML
+    Label label21;
+    @FXML
+    Label label30;
+    @FXML
+    Label label31;
+    @FXML
+    Label label40;
+    @FXML
+    Label label41;
+    @FXML
+    Label label50;
+    @FXML
+    Label label51;
+
+    //botones
+    @FXML
+    Button realizar;
+
+    //campos de texto
+    @FXML
+    TextField primerDato;
+    @FXML
+    TextField segundoDato;
 
     @FXML
     private ComboBox<String> comboOpciones;
@@ -47,7 +90,20 @@ public class ControladorPrincipal implements Initializable {
         comboOpciones.setItems(list);
         labelkk.setText("NOOOOOOOO");
 
+        segundoDato.setVisible(false);
+        /*
 
+        reconocerTexto();
+    }
+
+    public void reconocerTexto() {
+        primerDato.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null && !newValue.isEmpty()) {
+                realizar.setDisable(false);
+            } else {
+                realizar.setDisable(true);
+            }
+        });
     }
 
 

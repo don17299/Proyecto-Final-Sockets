@@ -1,5 +1,8 @@
 package sample;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.ToolBar;
+import javafx.scene.layout.VBox;
 import view.ControladorPrincipal;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,30 +26,36 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        laanzarVentanaInicial();
+        lanzarVentanaInicial();
     }
 
 
     /**
      * Metodo que lanza la ventana inicial
      */
-    public void laanzarVentanaInicial() throws IOException{
+    public void lanzarVentanaInicial() throws IOException{
 
             // Cargo la vista
             FXMLLoader cargador = new FXMLLoader(getClass().getResource("/view/VistaPrincipal.fxml"));
             // Cargo la ventana
             Parent root = cargador.load();
             // Creo el Scene
-            Scene scene = new Scene(root);
+
             Stage stage = new Stage();
+
+            ToolBar barraLateral = new ToolBar();
+            Button button1 = new Button("Button 1");
+            barraLateral.getItems().add(button1);
+
+            VBox vBox = new VBox(barraLateral);
+            Scene scene = new Scene(root);
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.setTitle("Menu");
            ControladorPrincipal controlador = cargador.getController();
            controlador.enlazarVentaYControlador(this);
-            stage.showAndWait();
-
-
+           stage.showAndWait();
     }
 
 
