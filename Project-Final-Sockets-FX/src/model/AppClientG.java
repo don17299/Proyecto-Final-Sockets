@@ -10,6 +10,7 @@ public class AppClientG {
 
     public AppClientG() {
 
+<<<<<<< HEAD
         System.out.println("Cliente del Banco en ejecución...");
     }
 
@@ -17,6 +18,12 @@ public class AppClientG {
         clientSideSocket = new Socket(SERVER, PORT);
 
         AppClientProtocolG.protocol(clientSideSocket,opcion, mensaje);
+=======
+    public void init(int opcion, String mensaje) throws Exception {
+        clientSideSocket = new Socket(SERVER, PORT);
+
+        AppClientProtocolG.protocol(clientSideSocket, opcion, mensaje);
+>>>>>>> a89a6d8c6e9422bea8a75dd548a3a7b1770b4a7c
         clientSideSocket.close();
     }
 }

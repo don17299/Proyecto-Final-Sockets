@@ -91,6 +91,10 @@ public class ControladorPrincipal implements Initializable {
         labelkk.setText("NOOOOOOOO");
 
         segundoDato.setVisible(false);
+<<<<<<< HEAD
+=======
+
+>>>>>>> a89a6d8c6e9422bea8a75dd548a3a7b1770b4a7c
 
         reconocerTexto();
     }
