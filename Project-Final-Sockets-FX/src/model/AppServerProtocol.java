@@ -38,13 +38,13 @@ public class AppServerProtocol {
                     }
                 }
                 if (isLogged) {
-                    mensajeAlCliente = "Error al crear la cuenta, nombre de cuenta repetido";
+                    mensajeAlCliente = "ERR:Error al crear la cuenta, nombre de cuenta repetido";
                 } else {
                     CuentaAhorros cuenta = new CuentaAhorros(nombre);
                     cuentas.put(numeroCuenta + "", cuenta);
                     numeroCuenta++;
                     cuenta.getTransacciones().add(new Transaccion("ABRIR-CUENTA"));
-                    mensajeAlCliente = "Transaccion exitosa su numero de cuenta es el :" + (numeroCuenta - 1);
+                    mensajeAlCliente = "Transaccion exitosa su numero de cuenta es el : " + (numeroCuenta - 1);
                 }
 
                 break;
@@ -61,16 +61,16 @@ public class AppServerProtocol {
                             micuentaBolsillo.setNombreCuenta(numeroCuenta + "b");
                             cuentaUsuario.setCuentaBolsillo(micuentaBolsillo);
                             cuentaUsuario.getTransacciones().add(new Transaccion("ABRIR-BOLSILLO"));
-                            mensajeAlCliente = "Bolsillo abierto exitosamente ";
+                            mensajeAlCliente = "Bolsillo abierto exitosamente, numero de bolsillo: "+micuentaBolsillo.getNombreCuenta();
 
                         }else{
-                            mensajeAlCliente = "Bolsillo ya existente ";
+                            mensajeAlCliente = "ERR:Bolsillo ya existente ";
                         }
                     }else{
-                        mensajeAlCliente = "La cuenta no existe";
+                        mensajeAlCliente = "ERR:La cuenta no existe";
                     }
                 }else{
-                    mensajeAlCliente = "Informacion insuficiente o inconsistente";
+                    mensajeAlCliente = "ERR:Informacion insuficiente o inconsistente";
                 }
                 break;
 
@@ -89,13 +89,13 @@ public class AppServerProtocol {
                             cuentaUsuario.getTransacciones().add(new Transaccion("CANCELAR-BOLSILLO"));
                             mensajeAlCliente = "El bolsillo ha sido borrado de la faz de la tierra ";
                         }else{
-                            mensajeAlCliente = "El bolsillo no ha sido creado ";
+                            mensajeAlCliente = "ERR:El bolsillo no ha sido creado ";
                         }
                     }else {
-                        mensajeAlCliente = "La cuenta del bolsillo no existe";
+                        mensajeAlCliente = "ERR:La cuenta del bolsillo no existe";
                     }
                 }else{
-                    mensajeAlCliente = "Informacion insuficiente o inconsistente";
+                    mensajeAlCliente = "ERR:Informacion insuficiente o inconsistente";
                 }
 
                 break;
@@ -110,16 +110,16 @@ public class AppServerProtocol {
                                 cuentas.remove(numeroCuenta4,cuentaAhorros);
                                 mensajeAlCliente = "Proceso exitoso, cuenta: "+ numeroCuenta4+" cancelada";
                             } else {
-                                mensajeAlCliente = "Saldo existente, no se puede cancelar la cuenta";
+                                mensajeAlCliente = "ERR:Saldo existente, no se puede cancelar la cuenta";
                             }
                         } else {
-                            mensajeAlCliente = "Bolsillo activo, no se puede cancelar la cuenta";
+                            mensajeAlCliente = "ERR:Bolsillo activo, no se puede cancelar la cuenta";
                         }
                     }else{
-                        mensajeAlCliente = "Cuenta inexistente";
+                        mensajeAlCliente = "ERR:Cuenta inexistente";
                     }
                 } else {
-                    mensajeAlCliente = "Informacion insuficiente o inconsistente";
+                    mensajeAlCliente = "ERR:Informacion insuficiente o inconsistente";
                 }
 
                 break;
@@ -139,19 +139,19 @@ public class AppServerProtocol {
                                     cuentaAhorros.getTransacciones().add(new Transaccion("DEPOSITAR"));
                                     mensajeAlCliente = "Transaccion realizada exitosamente, saldo actual: "+cuentaAhorros.getSaldoCuenta();
                                 } else {
-                                    mensajeAlCliente ="El valor debe ser superior a cero";
+                                    mensajeAlCliente ="ERR:El valor debe ser superior a cero";
                                 }
                             } else {
-                                mensajeAlCliente ="La cantidad que ingresa no es un numero";
+                                mensajeAlCliente ="ERR:La cantidad que ingresa no es un numero";
                             }
                         }else {
-                            mensajeAlCliente = "Cuenta inexistente";
+                            mensajeAlCliente = "ERR:Cuenta inexistente";
                         }
                     } else {
-                        mensajeAlCliente = "Informacion insuficiente o inconsistente";
+                        mensajeAlCliente = "ERR:Informacion insuficiente o inconsistente";
                     }
                 }catch (ArrayIndexOutOfBoundsException e){
-                    mensajeAlCliente="Informaccion ingresada de manera erronea";
+                    mensajeAlCliente="ERR:Informaccion ingresada de manera erronea";
                 }
 
 
@@ -172,22 +172,22 @@ public class AppServerProtocol {
                                         cuentaAhorros.getTransacciones().add(new Transaccion("RETIRAR"));
                                         mensajeAlCliente = "Transaccion realizada exitosamente, saldo actual: " + cuentaAhorros.getSaldoCuenta();
                                     } else {
-                                        mensajeAlCliente = "Fondos insuficientes";
+                                        mensajeAlCliente = "ERR:Fondos insuficientes";
                                     }
                                 } else {
-                                    mensajeAlCliente = "El valor debe ser superior a cero";
+                                    mensajeAlCliente = "ERR:El valor debe ser superior a cero";
                                 }
                             } else {
-                                mensajeAlCliente = "La cantidad que ingresa no es un numero";
+                                mensajeAlCliente = "ERR:La cantidad que ingresa no es un numero";
                             }
                         } else {
-                            mensajeAlCliente = "Cuenta inexistente";
+                            mensajeAlCliente = "ERR:Cuenta inexistente";
                         }
                     } else {
-                        mensajeAlCliente = "Informacion insuficiente o inconsistente";
+                        mensajeAlCliente = "ERR:Informacion insuficiente o inconsistente";
                     }
                 }catch (ArrayIndexOutOfBoundsException e){
-                    mensajeAlCliente="Informacion ingresada de manera erronea";
+                    mensajeAlCliente="ERR:Informacion ingresada de manera erronea";
                 }
                 break;
             case "TRASLADAR":
@@ -212,22 +212,22 @@ public class AppServerProtocol {
                                         mensajeAlCliente="Transaccion exitosa, el saldo actual de su cuenta es: "+cuentaAhorros.getSaldoCuenta()+"y el saldo de su bolsillo es: "+cuentaAhorros.getCuentaBolsillo().getSaldoBolsillo();
 
                                     }else{
-                                             mensajeAlCliente="El bolsillo no existe";
+                                             mensajeAlCliente="ERR:El bolsillo no existe";
                                     }
                                 } else {
-                                    mensajeAlCliente = "Fondos insuficientes";
+                                    mensajeAlCliente = "ERR:Fondos insuficientes";
                                 }
                             } else {
-                                mensajeAlCliente = "El valor debe ser superior a cero";
+                                mensajeAlCliente = "ERR:El valor debe ser superior a cero";
                             }
                         } else {
-                            mensajeAlCliente = "La cantidad que ingresa no es un numero";
+                            mensajeAlCliente = "ERR:La cantidad que ingresa no es un numero";
                         }
                     } else {
-                        mensajeAlCliente = "Cuenta inexistente";
+                        mensajeAlCliente = "ERR:Cuenta inexistente";
                     }
                 } else {
-                    mensajeAlCliente = "Informacion insuficiente o inconsistente";
+                    mensajeAlCliente = "ERR:Informacion insuficiente o inconsistente";
                 }
 
 
@@ -241,7 +241,7 @@ public class AppServerProtocol {
                         cuentaAhorros.getTransacciones().add(new Transaccion("CONSULTAR-CUENTA"));
                         mensajeAlCliente = "Saldo de la Cuenta de Ahorros: "+ cuentaAhorros.getSaldoCuenta();
                     }else {
-                        mensajeAlCliente = "Cuenta inexistente";
+                        mensajeAlCliente = "ERR:Cuenta inexistente";
                     }
                 } else {
                     String numCuenta8=numeroCuenta8.substring(0, numeroCuenta8.length() - 1);
@@ -254,13 +254,13 @@ public class AppServerProtocol {
                                 cuentaAhorros.getTransacciones().add(new Transaccion("CONSULTAR-BOLSILLO"));
                                 mensajeAlCliente = "Saldo del Bolsillo: " + bolsillo.getSaldoBolsillo();
                             }else{
-                                mensajeAlCliente="el bolsillo no ha sido creado";
+                                mensajeAlCliente="ERR:El bolsillo no ha sido creado";
                             }
                         } else {
-                            mensajeAlCliente = "Cuenta del bolsillo inexistente";
+                            mensajeAlCliente = "ERR:Cuenta del bolsillo inexistente";
                         }
                     }else{
-                        mensajeAlCliente = "Informacion insuficiente o inconsistente";
+                        mensajeAlCliente = "ERR:Informacion insuficiente o inconsistente";
                     }
                 }
 
@@ -272,7 +272,7 @@ public class AppServerProtocol {
                 break;
 
             default:
-                mensajeAlCliente = "Ocurrio un error";
+                mensajeAlCliente = "ERR:Ocurrio un error";
 
                 break;
 

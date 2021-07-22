@@ -62,9 +62,10 @@ public class CuentaAhorros {
     @Override
     public String toString() {
         return "CuentaAhorros{" +
-                "nombreUsuario='" + nombreUsuario + '\'' +
+                "transacciones=" + transacciones +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
                 ", saldoCuenta=" + saldoCuenta +
-                ", cuentaBolsillo=" + ((cuentaBolsillo!=null)?cuentaBolsillo.toString():"no existe") +
+                ", cuentaBolsillo=" +((cuentaBolsillo!=null)?cuentaBolsillo.toString():"no existe")+
                 '}';
     }
 

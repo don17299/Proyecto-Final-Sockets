@@ -3,60 +3,33 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="566.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ControladorPrincipal">
    <children>
-      <ImageView fx:id="imagen" fitHeight="167.0" fitWidth="119.0" layoutX="62.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imagen" fitHeight="167.0" fitWidth="119.0" layoutX="62.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/imaBanco.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="14.0" layoutY="35.0" prefHeight="17.0" prefWidth="230.0" text="Bienvenido al Banco" textFill="#1e1e1e" />
-      <ComboBox fx:id="comboOpciones" layoutX="33.0" layoutY="204.0" prefHeight="25.0" prefWidth="175.0" promptText="Hacer transaccion" />
-      <Label fx:id="labelMC" layoutX="21.0" layoutY="239.0" prefHeight="23.0" prefWidth="534.0" />
-      <TextField fx:id="primerDato" layoutX="33.0" layoutY="265.0" prefHeight="25.0" prefWidth="175.0" />
-      <Label fx:id="labelMS" layoutX="21.0" layoutY="342.0" prefHeight="33.0" prefWidth="534.0" text="Respuesta:" />
-      <GridPane layoutX="258.0" layoutY="78.0" prefHeight="167.0" prefWidth="271.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label fx:id="label00" />
-            <Label fx:id="label10" GridPane.rowIndex="1" />
-            <Label fx:id="label50" GridPane.rowIndex="5" />
-            <Label fx:id="label11" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="label51" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label fx:id="label20" GridPane.rowIndex="2" />
-            <Label fx:id="label21" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="label30" GridPane.rowIndex="3" />
-            <Label fx:id="label31" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="label40" GridPane.rowIndex="4" />
-            <Label fx:id="label41" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label fx:id="label01" GridPane.columnIndex="1" />
-         </children>
-      </GridPane>
-      <Button fx:id="realizar" disable="true" layoutX="33.0" layoutY="300.0" mnemonicParsing="false" onAction="#realizarButton" prefHeight="25.0" prefWidth="175.0" text="Realizar" />
-      <Label layoutX="299.0" layoutY="24.0" text="Campo de información ">
+      <Label layoutX="33.0" layoutY="35.0" prefHeight="17.0" prefWidth="230.0" text="Bienvenido al Banco" textAlignment="CENTER" textFill="#1e1e1e">
+         <font>
+            <Font name="Times New Roman" size="21.0" />
+         </font></Label>
+      <ComboBox fx:id="comboOpciones" layoutX="33.0" layoutY="249.0" prefHeight="25.0" prefWidth="175.0" promptText="Hacer transaccion" />
+      <Label fx:id="labelMC" layoutX="21.0" layoutY="285.0" prefHeight="23.0" prefWidth="534.0" />
+      <TextField fx:id="primerDato" layoutX="33.0" layoutY="311.0" prefHeight="25.0" prefWidth="175.0" />
+      <Button fx:id="realizar" disable="true" layoutX="33.0" layoutY="346.0" mnemonicParsing="false" onAction="#realizarButton" prefHeight="25.0" prefWidth="175.0" text="Realizar" />
+      <Label layoutX="319.0" layoutY="24.0" text="Campo de información ">
          <font>
             <Font name="Times New Roman" size="20.0" />
          </font>
       </Label>
+      <TextArea fx:id="informacion" layoutX="273.0" layoutY="71.0" prefHeight="200.0" prefWidth="270.0" />
    </children>
 </AnchorPane>

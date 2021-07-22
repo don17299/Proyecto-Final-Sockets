@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import model.interfaz.AppClientG;
 import model.interfaz.Main;
@@ -19,34 +16,9 @@ public class ControladorPrincipal implements Initializable {
     //labeles
     @FXML
     Label labelMC;
-    @FXML
-    Label labelMS;
 
-    //labeles del gridpane
     @FXML
-    Label label00;
-    @FXML
-    Label label01;
-    @FXML
-    Label label10;
-    @FXML
-    Label label11;
-    @FXML
-    Label label20;
-    @FXML
-    Label label21;
-    @FXML
-    Label label30;
-    @FXML
-    Label label31;
-    @FXML
-    Label label40;
-    @FXML
-    Label label41;
-    @FXML
-    Label label50;
-    @FXML
-    Label label51;
+    TextArea informacion;
 
     //botones
     @FXML
@@ -88,7 +60,7 @@ public class ControladorPrincipal implements Initializable {
 
     public void reconocerTexto() {
         primerDato.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null && !newValue.isEmpty()) {
+            if(newValue != null && !newValue.trim().isEmpty()) {
                 realizar.setDisable(false);
             } else {
                 realizar.setDisable(true);
@@ -103,35 +75,35 @@ public class ControladorPrincipal implements Initializable {
             switch (newValue) {
                 case "Crear Cuenta":
                     opcion = 1;
-                    labelMC.setText("Ingrese su nombre y apellido");
+                    labelMC.setText("Ingrese su nombre y apellido:");
                     break;
                 case "Crear Bolsillo":
                     opcion = 2;
-                    labelMC.setText("Ingrese su número de cuenta : ");
+                    labelMC.setText("Ingrese su número de cuenta: ");
                     break;
                 case "Cancelar Bolsillo":
                     opcion = 3;
-                    labelMC.setText("Ingrese el numero de cuenta del bolsillo");
+                    labelMC.setText("Ingrese el numero de cuenta del bolsillo:");
                     break;
                 case "Cancelar Cuenta":
                     opcion = 4;
-                    labelMC.setText("Ingrese su número de cuenta : ");
+                    labelMC.setText("Ingrese su número de cuenta: ");
                     break;
                 case "Depositar":
                     opcion = 5;
-                    labelMC.setText("Ingrese el numero de su cuenta y la cantidad a depositar separados por espacio");
+                    labelMC.setText("Ingrese el numero de su cuenta y la cantidad a depositar separados por espacio:");
                     break;
                 case "Retirar":
                     opcion = 6;
-                    labelMC.setText("Ingrese el numero de su cuenta y la cantidad a retirar separados por espacio");
+                    labelMC.setText("Ingrese el numero de su cuenta y la cantidad a retirar separados por espacio:");
                     break;
                 case "Trasladar":
                     opcion = 7;
-                    labelMC.setText("Ingrese el numero de su cuenta y el saldo a trasladar al bolsillo separados por un espacio");
+                    labelMC.setText("Ingrese el numero de su cuenta y el saldo a trasladar al bolsillo separados por un espacio:");
                     break;
                 case "Consultar Saldo de Cuenta":
                     opcion = 8;
-                    labelMC.setText("Ingrese su numero de cuenta de ahorros o un bolsillo");
+                    labelMC.setText("Ingrese su numero de cuenta de ahorros o un bolsillo:");
                     break;
                 case "Consultar Numero de Cuentas":
                     opcion = 9;
@@ -160,7 +132,17 @@ public class ControladorPrincipal implements Initializable {
     }
 
     public void mostrarMensajeServidor(String message){
-        labelMS.setText(message);
+        String[] mensaje= message.split(":");
+        if(mensaje[0].equals("ERR")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error del Banco");
+            alert.setHeaderText("Error de Transacción");
+            alert.setContentText(mensaje[1]);
+            alert.showAndWait();
+
+        }else {
+            informacion.setText(message);
+        }
     }
 
     public void enlazarVentanaYControlador(Main principal)

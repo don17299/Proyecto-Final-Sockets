@@ -28,4 +28,12 @@ public class Transaccion {
     public void setCodigoTransaccion(String codigoTransaccion) {
         this.codigoTransaccion = codigoTransaccion;
     }
+
+    @Override
+    public String toString() {
+        return "Transaccion{" +
+                "FechaTransaccion=" + FechaTransaccion +
+                ", codigoTransaccion='" + codigoTransaccion + '\'' +
+                '}';
+    }
 }
