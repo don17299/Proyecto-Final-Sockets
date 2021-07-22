@@ -12,15 +12,10 @@ public class AppClientG {
         System.out.println("Cliente del Banco en ejecución...");
     }
 
-    public void iniciar(int opcion,String mensaje) throws Exception {
-        AppClientG ec = new AppClientG();
-        ec.init();
-    }
-
-    public void init() throws Exception {
+    public void init(int opcion, String mensaje) throws Exception {
         clientSideSocket = new Socket(SERVER, PORT);
 
-        AppClientProtocol.protocol(clientSideSocketopcion, mensaje);
+        AppClientProtocolG.protocol(clientSideSocket, opcion, mensaje);
         clientSideSocket.close();
     }
 }
